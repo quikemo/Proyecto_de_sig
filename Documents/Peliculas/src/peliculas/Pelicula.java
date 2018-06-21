@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package peliculas;
-
+import java.util.ArrayList;
 /**
  *
  * @author fam. moreno
@@ -17,6 +17,49 @@ public class Pelicula extends javax.swing.JFrame {
     public Pelicula() {
         initComponents();
         this.setLocationRelativeTo(this);
+        Conexion.conectar();
+        
+       ArrayList <String> lista = new  ArrayList<String>();
+       lista = Conexion.llenar_combobox("director","Nombre_productor");
+       ArrayList <String> lista1 = new  ArrayList<String>();
+        lista1 = Conexion.llenar_combobox("productora","Nombre_Productora");
+        ArrayList <String> lista2 = new  ArrayList<String>();
+        lista2 = Conexion.llenar_combobox("genero","Tipo_de_genero");
+        ArrayList <String> lista3 = new  ArrayList<String>();
+        lista3 = Conexion.llenar_combobox("clasificacion_edad","Cod_Clasificacion");
+        for(int i=0;i<lista.size();i++){
+        cbxDirector.addItem(lista.get(i));
+        }
+         for(int i=0;i<lista1.size();i++){
+        cbxProduccion.addItem(lista1.get(i));
+        }
+          for(int i=0;i<lista2.size();i++){
+        cbxGenero.addItem(lista2.get(i));
+        }
+           for(int i=0;i<lista3.size();i++){
+        cbxEdad.addItem(lista3.get(i));
+        }
+   
+        
+    }
+    public Variables dar_valores(){
+    Variables x = null;
+        String Nombre = txtNombreIngresar.getText();
+        String Sinopsis = txtASinopsisIngresar.getText();
+        String Director = cbxDirector.getSelectedItem().toString();
+        String Productora = cbxProduccion.getSelectedItem().toString();
+        String Genero = cbxGenero.getSelectedItem().toString();
+        String Edad = cbxEdad.getSelectedItem().toString();
+        
+        x = new Variables(Nombre,Sinopsis,Director,Productora,Genero,Edad);
+        return x;
+    }
+    public void mostrar(Variables resultado){
+    txtDirectorSalida.setText(resultado.getDirector());
+    txtProduccionSalida.setText(resultado.getProductora());
+    txtGeneroSalida.setText(resultado.getGenero());
+    txtEdadSalida.setText(resultado.getEdad());
+    txtSinopsisSalida.setText(resultado.getSinopsis());
     }
 
     /**
@@ -77,6 +120,7 @@ public class Pelicula extends javax.swing.JFrame {
         txtNombreBorrar = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         btnCerrarBorrar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -122,6 +166,11 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnGuardar.setBackground(new java.awt.Color(0, 204, 153));
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setBackground(new java.awt.Color(0, 204, 153));
         btnLimpiar.setText("Limpiar");
@@ -145,6 +194,11 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnCerrar.setBackground(new java.awt.Color(0, 204, 153));
         btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,7 +246,7 @@ public class Pelicula extends javax.swing.JFrame {
                                             .addComponent(btnAggDirector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(btnAggGenero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(btnAggEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                        .addGap(0, 67, Short.MAX_VALUE)))
+                        .addGap(0, 99, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -230,7 +284,7 @@ public class Pelicula extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnLimpiar)
@@ -253,6 +307,11 @@ public class Pelicula extends javax.swing.JFrame {
         });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Director");
 
@@ -279,7 +338,7 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnLimpiarBuscar.setText("Limpiar");
 
-        btnCerrarBuscar.setText("jButton1");
+        btnCerrarBuscar.setText("Cerrar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -313,7 +372,7 @@ public class Pelicula extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBuscar)
                             .addComponent(btnLimpiarBuscar))))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrarBuscar)
@@ -348,9 +407,9 @@ public class Pelicula extends javax.swing.JFrame {
                     .addComponent(txtEdadSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel15)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnCerrarBuscar)
                 .addContainerGap())
         );
@@ -365,7 +424,7 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
 
-        btnCerrarBorrar.setText("jButton1");
+        btnCerrarBorrar.setText("Cerrar");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -385,7 +444,7 @@ public class Pelicula extends javax.swing.JFrame {
                                 .addComponent(txtNombreBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(49, 49, 49)
                                 .addComponent(btnEliminar)))
-                        .addGap(0, 176, Short.MAX_VALUE))
+                        .addGap(0, 208, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCerrarBorrar)))
@@ -401,24 +460,35 @@ public class Pelicula extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(txtNombreBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(btnCerrarBorrar)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Borrar", jPanel3);
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 347, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Editar", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -435,6 +505,27 @@ public class Pelicula extends javax.swing.JFrame {
     private void txtNombreBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreBuscarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Variables x;
+        x=dar_valores();
+        Conexion.guardar(x);
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       String Nombre;
+       Nombre = txtNombreBuscar.getText();
+       Variables resultado = Conexion.BuscarPeli(Nombre);
+       if(resultado==null){
+       }else{
+       mostrar(resultado);
+       }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,6 +599,7 @@ public class Pelicula extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider1;
