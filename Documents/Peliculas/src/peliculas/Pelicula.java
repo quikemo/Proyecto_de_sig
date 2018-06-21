@@ -5,7 +5,9 @@
  */
 package peliculas;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 /**
  *
@@ -66,8 +68,9 @@ public class Pelicula extends javax.swing.JFrame {
     }
     public Variables dar_valores(){
     Variables x = null;
+    
     if( cbxDirector.getSelectedIndex()==0 || cbxProduccion.getSelectedIndex()==0 || cbxGenero.getSelectedIndex()==0 || cbxEdad.getSelectedIndex()==0){
-        
+        System.out.println("no se puede dejar en blanco los combobox");
     }else{
         String Nombre = txtNombreIngresar.getText();
         String Sinopsis = txtASinopsisIngresar.getText();
@@ -78,6 +81,7 @@ public class Pelicula extends javax.swing.JFrame {
     
         
         x = new Variables(Nombre,Sinopsis,Director,Productora,Genero,Edad);
+        return x;
     }
         return x;
     }
@@ -88,6 +92,7 @@ public class Pelicula extends javax.swing.JFrame {
     txtEdadSalida.setText(resultado.getEdad());
     txtSinopsisSalida.setText(resultado.getSinopsis());
     }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -194,19 +199,55 @@ public class Pelicula extends javax.swing.JFrame {
 
         txtASinopsisIngresar.setColumns(20);
         txtASinopsisIngresar.setRows(5);
+        txtASinopsisIngresar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtASinopsisIngresarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtASinopsisIngresarKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtASinopsisIngresar);
 
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona..." }));
+        cbxGenero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxGeneroKeyPressed(evt);
+            }
+        });
 
         cbxProduccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona..." }));
+        cbxProduccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxProduccionKeyPressed(evt);
+            }
+        });
 
         cbxDirector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona..." }));
+        cbxDirector.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxDirectorKeyPressed(evt);
+            }
+        });
 
         cbxEdad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona..." }));
+        cbxEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxEdadKeyPressed(evt);
+            }
+        });
 
         txtNombreIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreIngresarActionPerformed(evt);
+            }
+        });
+        txtNombreIngresar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreIngresarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreIngresarKeyTyped(evt);
             }
         });
 
@@ -228,6 +269,11 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnAggDirector.setBackground(new java.awt.Color(0, 204, 153));
         btnAggDirector.setText("Nuevo Director");
+        btnAggDirector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggDirectorActionPerformed(evt);
+            }
+        });
 
         btnAggProduccion.setBackground(new java.awt.Color(0, 204, 153));
         btnAggProduccion.setText("Nueva Produccion");
@@ -239,9 +285,19 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnAggGenero.setBackground(new java.awt.Color(0, 204, 153));
         btnAggGenero.setText("Nuevo Genero");
+        btnAggGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggGeneroActionPerformed(evt);
+            }
+        });
 
         btnAggEdad.setBackground(new java.awt.Color(0, 204, 153));
         btnAggEdad.setText("Nueva edad");
+        btnAggEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggEdadActionPerformed(evt);
+            }
+        });
 
         btnCerrar.setBackground(new java.awt.Color(0, 204, 153));
         btnCerrar.setText("Cerrar");
@@ -354,6 +410,11 @@ public class Pelicula extends javax.swing.JFrame {
         txtNombreBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreBuscarActionPerformed(evt);
+            }
+        });
+        txtNombreBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreBuscarKeyTyped(evt);
             }
         });
 
@@ -483,6 +544,15 @@ public class Pelicula extends javax.swing.JFrame {
 
         jLabel17.setText("Nombre");
 
+        txtNombreBorrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreBorrarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreBorrarKeyTyped(evt);
+            }
+        });
+
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -587,6 +657,11 @@ public class Pelicula extends javax.swing.JFrame {
         txtNombreModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreModificarActionPerformed(evt);
+            }
+        });
+        txtNombreModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreModificarKeyTyped(evt);
             }
         });
 
@@ -700,7 +775,9 @@ public class Pelicula extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreIngresarActionPerformed
 
     private void btnAggProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggProduccionActionPerformed
-        // TODO add your handling code here:
+        String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del director de la productora de Peliculas");
+        String q = "INSERT INTO `productora` (`Nombre_Productora`) VALUES ('"+Nombre+"')";
+        Conexion.ejecutar(q);
     }//GEN-LAST:event_btnAggProduccionActionPerformed
 
     private void txtNombreBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreBuscarActionPerformed
@@ -714,7 +791,11 @@ public class Pelicula extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Variables x;
         x=dar_valores();
+        if(x==null){
+        JOptionPane.showMessageDialog(null,"No se puede dejar sin selexionar las caracteristicas de los combobox");
+        }else{
         Conexion.guardar(x);
+        }
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -833,6 +914,115 @@ public class Pelicula extends javax.swing.JFrame {
         cbxEdadSalida.setSelectedIndex(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void txtNombreIngresarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreIngresarKeyTyped
+        int limite = 44;
+        if(txtNombreIngresar.getText().length()==limite){
+            JOptionPane.showMessageDialog(null, "Llego al limite de letras para el nombre de la pelicula");
+        evt.consume();
+        cbxDirector.requestFocus();
+        }
+        
+        
+    }//GEN-LAST:event_txtNombreIngresarKeyTyped
+
+    private void txtASinopsisIngresarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtASinopsisIngresarKeyTyped
+        int limite = 100;
+        if(txtNombreIngresar.getText().length()==limite){
+            JOptionPane.showMessageDialog(null, "Llego al limite de letras para el nombre de la pelicula");
+        evt.consume();
+        btnGuardar.requestFocus();
+        }
+        
+    }//GEN-LAST:event_txtASinopsisIngresarKeyTyped
+
+    private void txtNombreIngresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreIngresarKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        cbxDirector.requestFocus();
+        }
+    }//GEN-LAST:event_txtNombreIngresarKeyPressed
+
+    private void txtASinopsisIngresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtASinopsisIngresarKeyPressed
+        
+    }//GEN-LAST:event_txtASinopsisIngresarKeyPressed
+
+    private void cbxDirectorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxDirectorKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        cbxProduccion.requestFocus();
+        }
+    }//GEN-LAST:event_cbxDirectorKeyPressed
+
+    private void cbxProduccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxProduccionKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        cbxGenero.requestFocus();
+        }
+    }//GEN-LAST:event_cbxProduccionKeyPressed
+
+    private void cbxGeneroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxGeneroKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        cbxEdad.requestFocus();
+        }
+    }//GEN-LAST:event_cbxGeneroKeyPressed
+
+    private void cbxEdadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxEdadKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        txtASinopsisIngresar.requestFocus();
+        }
+    }//GEN-LAST:event_cbxEdadKeyPressed
+
+    private void txtNombreBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreBuscarKeyTyped
+        int limite = 44;
+        if(txtNombreBuscar.getText().length()==limite){
+            JOptionPane.showMessageDialog(null, "Llego al limite de letras para el nombre de la pelicula");
+        evt.consume();
+        
+        }
+    }//GEN-LAST:event_txtNombreBuscarKeyTyped
+
+    private void txtNombreBorrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreBorrarKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        btnEliminar.requestFocus();
+        }
+    }//GEN-LAST:event_txtNombreBorrarKeyPressed
+
+    private void txtNombreModificarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreModificarKeyTyped
+        int limite = 44;
+        if(txtNombreModificar.getText().length()==limite){
+            JOptionPane.showMessageDialog(null, "Llego al limite de letras para el nombre de la pelicula");
+        evt.consume();
+        
+        }
+    }//GEN-LAST:event_txtNombreModificarKeyTyped
+
+    private void txtNombreBorrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreBorrarKeyTyped
+        int limite = 44;
+        if(txtNombreBorrar.getText().length()==limite){
+            JOptionPane.showMessageDialog(null, "Llego al limite de letras para el nombre de la pelicula");
+        evt.consume();
+        
+        }
+    }//GEN-LAST:event_txtNombreBorrarKeyTyped
+
+    private void btnAggDirectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggDirectorActionPerformed
+        String NombreDirector = JOptionPane.showInputDialog("Ingrese el nombre del director de peliculas");
+        String q = "INSERT INTO `director` (`Nombre_productor`) VALUES ('"+NombreDirector+"')";
+        Conexion.ejecutar(q);
+        this.repaint();
+    }//GEN-LAST:event_btnAggDirectorActionPerformed
+
+    private void btnAggGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggGeneroActionPerformed
+        String NombreDirector = JOptionPane.showInputDialog("Ingrese el nombre del director de peliculas");
+        String q = "INSERT INTO `genero` (`Tipo_de_genero`) VALUES ('"+NombreDirector+"')";
+        Conexion.ejecutar(q);
+    }//GEN-LAST:event_btnAggGeneroActionPerformed
+
+    private void btnAggEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggEdadActionPerformed
+        String NombreDirector = JOptionPane.showInputDialog("Ingrese el codigo de clasificacion de edad por ejempo +18");
+        String Codigo = JOptionPane.showInputDialog("Agrege una pequeña descripcion de la clasificacion");
+        String q = "INSERT INTO `clasificacion_edad` (`Cod_Clasificacion`, `Edad_Clasificacion`) VALUES ('"+Codigo+"', '"+NombreDirector+"')";
+        Conexion.ejecutar(q);
+        this.update(cbxDirector);
+    }//GEN-LAST:event_btnAggEdadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -939,6 +1129,10 @@ public class Pelicula extends javax.swing.JFrame {
     private javax.swing.JTextArea txtSinopsisModificacion;
     private javax.swing.JTextArea txtSinopsisSalida;
     // End of variables declaration//GEN-END:variables
+
+    private void update(JComboBox<String> cbxDirector) {
+       
+    }
 
     
 }
