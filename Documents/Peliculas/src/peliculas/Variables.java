@@ -16,6 +16,10 @@ public class Variables {
     String Productora;
     String Genero;
     String Edad;
+    String NombreUsuario;
+    String Password;
+
+    
 
     public Variables(String Nombre, String Sinopsis, String Director, String Productora, String Genero, String Edad) {
         this.Nombre = Nombre;

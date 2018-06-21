@@ -3,6 +3,7 @@ package peliculas;
 //Recuerde importar la biblioteca de conexión
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Conexion {
 
@@ -76,28 +77,36 @@ public class Conexion {
         ejecutar(q);
         
     }
+    
 
-    private static void ejecutar(String q) {
+    public static void ejecutar(String q) {
         try {
             sttm.executeUpdate(q);
             System.out.println("Se hizo la actualizacion");
+            JOptionPane.showMessageDialog(null,"Se hizo la actualizacion de datos correctamente");
         } catch (Exception e) {
             System.err.println("No se pudo ingresar datos");
+            JOptionPane.showMessageDialog(null,"No se pudo hacer la actualizacion de datos correctamente");
         }
     }
 
     public static Variables BuscarPeli(String Nombre) {
         Variables resultado = null;
         String q = "SELECT * FROM peliculas "+"WHERE Nombre_pelicula ='"+Nombre+"'";
-        try {
-           rst = sttm.executeQuery(q);
-            System.out.println("Se hizo la consulta");
-        } catch (Exception e) {
-            System.out.println("No se hizo la consulta");
-        }
+        buscar(q);
         resultado = asignar();
         return resultado;
     }
+      public static void buscar(String q) {
+       try {
+           rst = sttm.executeQuery(q);
+            System.out.println("Se hizo la consulta");
+        } catch (Exception e) {
+            System.out.println("No se encontro el dato buscado");
+        }
+    }
+      
+    
     public static Variables asignar(){
     Variables resultado = null;
     String Nombre = null;
@@ -146,6 +155,48 @@ public class Conexion {
     return campo;
     }
 
+    public static void eliminar_reg(String Nombre) {
+        int codigo = 0;       
+        String q = "SELECT * FROM peliculas WHERE Nombre_pelicula='"+Nombre+"'";
+        buscar(q);
+        try {
+            if(rst.first()){
+                codigo = Integer.parseInt(rst.getString("id_peliculas"));
+                JOptionPane.showMessageDialog(null, "La pelicula que selecciono \""+Nombre+"\" fue borrada con exito");
+            }
+        } catch (Exception e) {
+        }
+       String b ="DELETE FROM peliculas WHERE id_peliculas='"+codigo+"'";
+       ejecutar(b);
+       
+       
+    
+    }
+
+    static String buscarUsuario(String Nombre) {
+        String pasword = null;
+        System.out.println(Nombre);
+        String q ="SELECT * FROM usuario WHERE Nombre_Usuario='"+Nombre+"'";
+        try {
+            rst = sttm.executeQuery(q);
+            System.out.println("Dato de Id guardado");
+        } catch (Exception e) {
+            System.out.println("no se pudo buscar id");
+        }
+        try {
+            if(rst.first()){
+                pasword = rst.getString("pasword");
+            }
+            System.out.println("Se guardo campo");
+        } catch (Exception e) {
+            System.out.println("No se guardo campo");
+        }
+        return pasword;
+    }
+
+    
+    }
+
    
 
-}
+

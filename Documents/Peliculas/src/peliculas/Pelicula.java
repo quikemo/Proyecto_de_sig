@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package peliculas;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author fam. moreno
@@ -18,7 +20,10 @@ public class Pelicula extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(this);
         Conexion.conectar();
-        
+        cbxDirectorSalida.setEnabled(false);
+       cbxProduccionSalida.setEnabled(false);
+       cbxGeneroSalida.setEnabled(false);
+       cbxEdadSalida.setEnabled(false);
        ArrayList <String> lista = new  ArrayList<String>();
        lista = Conexion.llenar_combobox("director","Nombre_productor");
        ArrayList <String> lista1 = new  ArrayList<String>();
@@ -29,29 +34,51 @@ public class Pelicula extends javax.swing.JFrame {
         lista3 = Conexion.llenar_combobox("clasificacion_edad","Cod_Clasificacion");
         for(int i=0;i<lista.size();i++){
         cbxDirector.addItem(lista.get(i));
+        cbxDirectorSalida.addItem(lista.get(i));
+        
         }
          for(int i=0;i<lista1.size();i++){
         cbxProduccion.addItem(lista1.get(i));
+        cbxProduccionSalida.addItem(lista1.get(i));
         }
           for(int i=0;i<lista2.size();i++){
         cbxGenero.addItem(lista2.get(i));
+        cbxGeneroSalida.addItem(lista2.get(i));
         }
            for(int i=0;i<lista3.size();i++){
         cbxEdad.addItem(lista3.get(i));
+        cbxEdadSalida.addItem(lista3.get(i));
         }
    
         
     }
+    private Variables dar_valores_modificados() {
+       Variables x = null;
+        String Nombre = txtNombreModificar.getText();
+        String Sinopsis = txtSinopsisModificacion.getText();
+        String Director = cbxDirectorSalida.getSelectedItem().toString();
+        String Productora = cbxProduccionSalida.getSelectedItem().toString();
+        String Genero = cbxGeneroSalida.getSelectedItem().toString();
+        String Edad = cbxEdadSalida.getSelectedItem().toString();
+        
+        x = new Variables(Nombre,Sinopsis,Director,Productora,Genero,Edad);
+        return x; 
+    }
     public Variables dar_valores(){
     Variables x = null;
+    if( cbxDirector.getSelectedIndex()==0 || cbxProduccion.getSelectedIndex()==0 || cbxGenero.getSelectedIndex()==0 || cbxEdad.getSelectedIndex()==0){
+        
+    }else{
         String Nombre = txtNombreIngresar.getText();
         String Sinopsis = txtASinopsisIngresar.getText();
         String Director = cbxDirector.getSelectedItem().toString();
         String Productora = cbxProduccion.getSelectedItem().toString();
         String Genero = cbxGenero.getSelectedItem().toString();
         String Edad = cbxEdad.getSelectedItem().toString();
+    
         
         x = new Variables(Nombre,Sinopsis,Director,Productora,Genero,Edad);
+    }
         return x;
     }
     public void mostrar(Variables resultado){
@@ -120,7 +147,26 @@ public class Pelicula extends javax.swing.JFrame {
         txtNombreBorrar = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         btnCerrarBorrar = new javax.swing.JButton();
+        btnLimpiarBorrar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        btnGuardarModificacion = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        btnCerrarEditar = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        txtNombreModificar = new javax.swing.JTextField();
+        cbxDirectorSalida = new javax.swing.JComboBox<>();
+        cbxProduccionSalida = new javax.swing.JComboBox<>();
+        cbxGeneroSalida = new javax.swing.JComboBox<>();
+        cbxEdadSalida = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtSinopsisModificacion = new javax.swing.JTextArea();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -174,6 +220,11 @@ public class Pelicula extends javax.swing.JFrame {
 
         btnLimpiar.setBackground(new java.awt.Color(0, 204, 153));
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnAggDirector.setBackground(new java.awt.Color(0, 204, 153));
         btnAggDirector.setText("Nuevo Director");
@@ -337,8 +388,18 @@ public class Pelicula extends javax.swing.JFrame {
         txtEdadSalida.setEnabled(false);
 
         btnLimpiarBuscar.setText("Limpiar");
+        btnLimpiarBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarBuscarActionPerformed(evt);
+            }
+        });
 
         btnCerrarBuscar.setText("Cerrar");
+        btnCerrarBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -423,8 +484,25 @@ public class Pelicula extends javax.swing.JFrame {
         jLabel17.setText("Nombre");
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnCerrarBorrar.setText("Cerrar");
+        btnCerrarBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarBorrarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiarBorrar.setText("Limpiar");
+        btnLimpiarBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarBorrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -432,22 +510,24 @@ public class Pelicula extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(172, 172, 172)
-                                .addComponent(jLabel16))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombreBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49)
-                                .addComponent(btnEliminar)))
-                        .addGap(0, 208, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCerrarBorrar)))
+                        .addComponent(btnCerrarBorrar))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnLimpiarBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(172, 172, 172)
+                                    .addComponent(jLabel16))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(42, 42, 42)
+                                    .addComponent(jLabel17)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtNombreBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(49, 49, 49)
+                                    .addComponent(btnEliminar))))
+                        .addGap(0, 208, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -460,22 +540,143 @@ public class Pelicula extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(txtNombreBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiarBorrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
                 .addComponent(btnCerrarBorrar)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Borrar", jPanel3);
 
+        btnGuardarModificacion.setText("Guardar");
+        btnGuardarModificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarModificacionActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Limpiar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        btnCerrarEditar.setText("Cerrar");
+        btnCerrarEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarEditarActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Ingrese el nombre de la pelicula que desea modificar de a \"buscar\" y luego modifique los campos");
+
+        jLabel19.setText("Nombre");
+
+        jLabel20.setText("Director");
+
+        jLabel21.setText("Produccion");
+
+        jLabel22.setText("Genero");
+
+        jLabel23.setText("Categoria de edad");
+
+        jLabel24.setText("Sinopsis");
+
+        txtNombreModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreModificarActionPerformed(evt);
+            }
+        });
+
+        txtSinopsisModificacion.setColumns(20);
+        txtSinopsisModificacion.setRows(5);
+        jScrollPane3.setViewportView(txtSinopsisModificacion);
+
+        jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnGuardarModificacion)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCerrarEditar))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(88, 88, 88)
+                                .addComponent(jLabel18))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel24))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxGeneroSalida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxEdadSalida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                    .addComponent(txtNombreModificar)
+                                    .addComponent(cbxDirectorSalida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbxProduccionSalida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4)))
+                        .addGap(93, 93, 93)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtNombreModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(cbxDirectorSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(cbxProduccionSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(cbxGeneroSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(cbxEdadSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarModificacion)
+                    .addComponent(jButton2)
+                    .addComponent(btnCerrarEditar))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Editar", jPanel4);
@@ -527,6 +728,111 @@ public class Pelicula extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void txtNombreModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreModificarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       cbxDirectorSalida.setEnabled(true);
+       cbxProduccionSalida.setEnabled(true);
+       cbxGeneroSalida.setEnabled(true);
+       cbxEdadSalida.setEnabled(true);
+       String Nombre;
+       Nombre = txtNombreModificar.getText();
+       Variables resultado = Conexion.BuscarPeli(Nombre);
+       if(resultado==null){
+       }else{
+           
+       for(int i = 0; i < (cbxDirectorSalida.getItemCount()-1);i++){
+           String valor = cbxDirectorSalida.getItemAt(i);
+           
+           if(resultado.getDirector().endsWith(valor)){
+           cbxDirectorSalida.setSelectedIndex(i);
+           }
+       }
+       for(int i = 0; i < (cbxProduccionSalida.getItemCount()-1);i++){
+           String valor = cbxProduccionSalida.getItemAt(i);
+           
+           if(resultado.getProductora().endsWith(valor)){
+           cbxProduccionSalida.setSelectedIndex(i);
+           }
+       }
+       for(int i = 0; i < (cbxGeneroSalida.getItemCount()-1);i++){
+           String valor = cbxGeneroSalida.getItemAt(i);
+           
+           if(resultado.getGenero().endsWith(valor)){
+           cbxGeneroSalida.setSelectedIndex(i);
+           }
+       }
+       for(int i = 0; i < (cbxEdadSalida.getItemCount()-1);i++){
+           String valor = cbxEdadSalida.getItemAt(i);
+           
+           if(resultado.getEdad().endsWith(valor)){
+           cbxEdadSalida.setSelectedIndex(i);
+           }
+       }
+       txtSinopsisModificacion.setText(resultado.getSinopsis());
+       }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnGuardarModificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarModificacionActionPerformed
+       Variables x;
+        x=dar_valores_modificados();
+        Conexion.guardar(x);
+    }//GEN-LAST:event_btnGuardarModificacionActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String Nombre = txtNombreBorrar.getText();
+        
+        int respuesta = JOptionPane.showConfirmDialog(null, "Esta seguro de querer eliminar la pelicula "+Nombre);
+        if(respuesta==JOptionPane.YES_OPTION){
+        Conexion.eliminar_reg(Nombre);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnCerrarEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarEditarActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_btnCerrarEditarActionPerformed
+
+    private void btnCerrarBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarBorrarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnCerrarBorrarActionPerformed
+
+    private void btnCerrarBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarBuscarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnCerrarBuscarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtNombreIngresar.setText(null);
+        txtASinopsisIngresar.setText(null);
+        cbxDirector.setSelectedIndex(0);
+        cbxProduccion.setSelectedIndex(0);
+        cbxGenero.setSelectedIndex(0);
+        cbxEdad.setSelectedIndex(0);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnLimpiarBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarBuscarActionPerformed
+       txtNombreBuscar.setText(null);
+        txtSinopsisSalida.setText(null);
+        txtDirectorSalida.setText(null);
+        txtProduccionSalida.setText(null);
+        txtGeneroSalida.setText(null);
+        txtEdadSalida.setText(null);
+    }//GEN-LAST:event_btnLimpiarBuscarActionPerformed
+
+    private void btnLimpiarBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarBorrarActionPerformed
+        txtNombreBorrar.setText(null);
+    }//GEN-LAST:event_btnLimpiarBorrarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        txtNombreModificar.setText(null);
+        txtSinopsisModificacion.setText(null);
+        cbxDirectorSalida.setSelectedIndex(0);
+        cbxProduccionSalida.setSelectedIndex(0);
+        cbxGeneroSalida.setSelectedIndex(0);
+        cbxEdadSalida.setSelectedIndex(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -571,14 +877,23 @@ public class Pelicula extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnCerrarBorrar;
     private javax.swing.JButton btnCerrarBuscar;
+    private javax.swing.JButton btnCerrarEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarModificacion;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnLimpiarBorrar;
     private javax.swing.JButton btnLimpiarBuscar;
     private javax.swing.JComboBox<String> cbxDirector;
+    private javax.swing.JComboBox<String> cbxDirectorSalida;
     private javax.swing.JComboBox<String> cbxEdad;
+    private javax.swing.JComboBox<String> cbxEdadSalida;
     private javax.swing.JComboBox<String> cbxGenero;
+    private javax.swing.JComboBox<String> cbxGeneroSalida;
     private javax.swing.JComboBox<String> cbxProduccion;
+    private javax.swing.JComboBox<String> cbxProduccionSalida;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -588,7 +903,14 @@ public class Pelicula extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -602,6 +924,7 @@ public class Pelicula extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea txtASinopsisIngresar;
@@ -611,7 +934,11 @@ public class Pelicula extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreBorrar;
     private javax.swing.JTextField txtNombreBuscar;
     private javax.swing.JTextField txtNombreIngresar;
+    private javax.swing.JTextField txtNombreModificar;
     private javax.swing.JTextField txtProduccionSalida;
+    private javax.swing.JTextArea txtSinopsisModificacion;
     private javax.swing.JTextArea txtSinopsisSalida;
     // End of variables declaration//GEN-END:variables
+
+    
 }
